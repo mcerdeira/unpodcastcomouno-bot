@@ -4,9 +4,9 @@ require("dotenv").config();
 const client = new Discord.Client();
 const url = `https://discord.com/oauth2/authorize?client_id=${process.env.CLIENTID}&scope=bot`;
 const topicslist = JSON.parse(fs.readFileSync("./topics.json", "utf8"));
-const topics = topicslist.topics;
 
 listTopics = function(msg){
+	let topics = topicslist.topics;
     let reply = "";
     topics.forEach(function (value, i) {
         reply += `${i}: ${value} \n`;
