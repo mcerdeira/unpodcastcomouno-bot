@@ -6,6 +6,12 @@ const url = `https://discord.com/oauth2/authorize?client_id=${process.env.CLIENT
 const topicslist = JSON.parse(fs.readFileSync("./topics.json", "utf8"));
 const topics = topicslist.topics;
 
+listTopics = function(msg){
+    topics.forEach(function (value, i) {
+        msg.reply(`${i}: ${value}`);
+    });
+};
+
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
     console.log(topics);
@@ -14,6 +20,7 @@ client.on('ready', () => {
 client.on('message', msg => {
     if (msg.mentions.has(client.user.id)) {
         let tokens = msg.content.split(" ");
+        msg.react(':robot:');
         if(tokens.length >= 2){
             switch(tokens[1]){
                 case "idea":
@@ -21,7 +28,7 @@ client.on('message', msg => {
                     msg.reply(`Acá tenes un tema ${topics[idx]}`);
                     break;
                 case "list":
-                    msg.reply(console.table(topics));
+                    listTopics();
                     break;
                 case "help":
                     msg.reply(`Los comandos son: idea, list, add {tema}, remove {indice} y help! Para Invitarme: ${url}`);
@@ -35,7 +42,7 @@ client.on('message', msg => {
                                 console.error(err);
                             } else {
                                 msg.reply("Listorti!");
-                                msg.reply(console.table(topics));
+                                listTopics();
                             }
                           });
                     } else {
