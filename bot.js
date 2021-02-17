@@ -60,6 +60,7 @@ client.on('message', msg => {
                                 console.error(err);
                             } else {
                                 msg.reply("Listorti!");
+                                listTopics(msg);
                             }
                           });
                     } else {
