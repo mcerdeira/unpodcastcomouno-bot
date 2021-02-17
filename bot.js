@@ -4,6 +4,7 @@ require("dotenv").config();
 const client = new Discord.Client();
 const url = `https://discord.com/oauth2/authorize?client_id=${process.env.CLIENTID}&scope=bot`;
 const topicslist = JSON.parse(fs.readFileSync("./topics.json", "utf8"));
+let version = "";
 
 listTopics = function(msg){
 	let topics = topicslist.topics;
@@ -25,7 +26,8 @@ msgReact = function(msg, ok){
 
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
-    console.log(topics);
+	version = require('./package.json').version;
+	console.log(version);
   });
 
 client.on('message', msg => {
@@ -44,7 +46,7 @@ client.on('message', msg => {
                     break;
                 case "help":
                     msgReact(msg, true);
-                    msg.reply(`Los comandos son: idea, list, add {tema}, remove {indice} y help! Para Invitarme: ${url}`);
+                    msg.reply(`Version ${version} \n Los comandos son: idea, list, add {tema}, remove {indice} y help! Para Invitarme: ${url}`);
                     break;
                 case "remove":
                     if(tokens.length == 3 && !isNaN(tokens[2])){
