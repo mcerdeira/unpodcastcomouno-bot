@@ -22,7 +22,7 @@ client.on('ready', () => {
 client.on('message', msg => {
     if (msg.mentions.has(client.user.id)) {
         let tokens = msg.content.split(" ");
-        msg.react(':robot:');
+        msg.react('🤖');
         if(tokens.length >= 2){
             switch(tokens[1]){
                 case "idea":
