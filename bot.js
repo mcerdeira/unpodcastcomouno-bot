@@ -28,7 +28,7 @@ client.on('message', msg => {
                     msg.reply(`Acá tenes un tema ${topics[idx]}`);
                     break;
                 case "list":
-                    listTopics();
+                    listTopics(msg);
                     break;
                 case "help":
                     msg.reply(`Los comandos son: idea, list, add {tema}, remove {indice} y help! Para Invitarme: ${url}`);
@@ -42,7 +42,7 @@ client.on('message', msg => {
                                 console.error(err);
                             } else {
                                 msg.reply("Listorti!");
-                                listTopics();
+                                listTopics(msg);
                             }
                           });
                     } else {
