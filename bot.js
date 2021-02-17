@@ -7,9 +7,11 @@ const topicslist = JSON.parse(fs.readFileSync("./topics.json", "utf8"));
 const topics = topicslist.topics;
 
 listTopics = function(msg){
+    let reply = "";
     topics.forEach(function (value, i) {
-        msg.reply(`${i}: ${value}`);
+        reply += `${i}: ${value} \n`;
     });
+    msg.reply(reply);
 };
 
 client.on('ready', () => {
