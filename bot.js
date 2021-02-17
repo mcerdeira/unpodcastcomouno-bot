@@ -14,6 +14,15 @@ listTopics = function(msg){
     msg.reply(reply);
 };
 
+msgReact = function(msg, ok){
+    if(ok){
+        msg.react('🤖');
+    } else {
+        msg.react('💩');
+        msg.reply("WTF?");
+    }
+};
+
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
     console.log(topics);
@@ -22,21 +31,24 @@ client.on('ready', () => {
 client.on('message', msg => {
     if (msg.mentions.has(client.user.id)) {
         let tokens = msg.content.split(" ");
-        msg.react('🤖');
         if(tokens.length >= 2){
             switch(tokens[1]){
                 case "idea":
+                    msgReact(msg, true);
                     let idx = Math.floor(Math.random() * topics.length);
                     msg.reply(`Acá tenes un tema ${topics[idx]}`);
                     break;
                 case "list":
+                    msgReact(msg, true);
                     listTopics(msg);
                     break;
                 case "help":
+                    msgReact(msg, true);
                     msg.reply(`Los comandos son: idea, list, add {tema}, remove {indice} y help! Para Invitarme: ${url}`);
                     break;
                 case "remove":
                     if(tokens.length == 3 && !isNaN(tokens[2])){
+                        msgReact(msg, true);
                         let index = tokens[2];
                         topicslist.topics.splice(index, 1);
                         fs.writeFile("./topics.json", JSON.stringify(topicslist), (err) => {
@@ -48,11 +60,13 @@ client.on('message', msg => {
                             }
                           });
                     } else {
+                        msgReact(msg, false);
                         msg.reply("What???");
                     }
                     break;
                 case "add":
                     if(tokens.length >= 3){
+                        msgReact(msg, true);
                         let topic = tokens.slice(2, tokens.length).join(" ");
                         topicslist.topics.push(topic);
                         fs.writeFile("./topics.json", JSON.stringify(topicslist), (err) => {
@@ -64,15 +78,15 @@ client.on('message', msg => {
                             }
                           });
                     } else {
-                        msg.reply("What???");
+                        msgReact(msg, false);
                     }
                     break;
                 default:
-                    msg.reply("What?");
+                    msgReact(msg, false);
                     break;
             }
         } else {
-            msg.reply("What??");
+            msgReact(msg, false);
         }
     }
 });
