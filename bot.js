@@ -21,10 +21,26 @@ client.on('message', msg => {
                     msg.reply(`Acá tenes un tema ${topics[idx]}`);
                     break;
                 case "list":
-                    msg.reply(topics);
+                    msg.reply(console.table(topics));
                     break;
                 case "help":
-                    msg.reply(`Los comandos son: idea, list, add y help! Para Invitarme: ${url}`);
+                    msg.reply(`Los comandos son: idea, list, add {tema}, remove {indice} y help! Para Invitarme: ${url}`);
+                    break;
+                case "remove":
+                    if(tokens.length == 3 && !isNaN(tokens[2])){
+                        let index = tokens[2];
+                        topicslist.topics.splice(index, 1);
+                        fs.writeFile("./topics.json", JSON.stringify(topicslist), (err) => {
+                            if (err) {
+                                console.error(err);
+                            } else {
+                                msg.reply("Listorti!");
+                                msg.reply(console.table(topics));
+                            }
+                          });
+                    } else {
+                        msg.reply("What???");
+                    }
                     break;
                 case "add":
                     if(tokens.length >= 3){
