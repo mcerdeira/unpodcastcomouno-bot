@@ -20,7 +20,7 @@ msgReact = function(msg, ok){
         msg.react('🤖');
     } else {
         msg.react('💩');
-        msg.reply("WTF?");
+        msg.reply(`WTF? Recibi: ${msg.content}`);
     }
 };
 
