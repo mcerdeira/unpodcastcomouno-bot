@@ -32,7 +32,7 @@ client.on('ready', () => {
 
 client.on('message', msg => {
     if (msg.mentions.has(client.user.id)) {
-        let tokens = msg.content.split(" ");
+        let tokens = msg.content.split(" ").map(token => token.trim()).filter(Boolean);
         if(tokens.length >= 2){
             switch(tokens[1]){
                 case "idea":
