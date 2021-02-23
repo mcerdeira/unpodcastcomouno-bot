@@ -36,6 +36,7 @@ client.on('message', msg => {
         if(tokens.length >= 2){
             switch(tokens[1]){
                 case "idea":
+                    let topics = topicslist.topics;
                     msgReact(msg, true);
                     let idx = Math.floor(Math.random() * topics.length);
                     msg.reply(`Acá tenes un tema ${topics[idx]}`);
